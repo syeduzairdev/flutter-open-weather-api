@@ -38,6 +38,27 @@ class _MyCurrentLocationScreenState extends State<MyCurrentLocationScreen> {
     setState(() {});
   }
 
+  /// add appropriete icon to page  according to response from API
+  String getWeatherIcon(int condition) {
+    if (condition < 300) {
+      return '🌩';
+    } else if (condition < 400) {
+      return '🌧';
+    } else if (condition < 600) {
+      return '☔️';
+    } else if (condition < 700) {
+      return '☃️';
+    } else if (condition < 800) {
+      return '🌫';
+    } else if (condition == 800) {
+      return '☀️';
+    } else if (condition <= 804) {
+      return '☁️';
+    } else {
+      return '🤷‍';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +70,22 @@ class _MyCurrentLocationScreenState extends State<MyCurrentLocationScreen> {
                 children: [
                   Text(
                       'Latitude: ${_currentLocation!.latitude}\nLongitude: ${_currentLocation!.longitude}'),
-                  Text('Address: ${_currentAddress!.sys!.country}'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          'Temperature: ${_currentAddress!.main!.temp!.toInt()}°'),
+                      Text(
+                          getWeatherIcon(
+                            _currentAddress!.weather![0].id!,
+                          ),
+                          style: const TextStyle(fontSize: 40)),
+                    ],
+                  ),
+                  Text('City: ${_currentAddress!.name}'),
+                  Text('Wheater: ${_currentAddress!.weather![0].description}'),
+                  Text('Wind Speed: ${_currentAddress!.wind!.speed} km/h'),
+                  Text('Humidity: ${_currentAddress!.main!.humidity} %'),
                 ],
               )
             : InkWell(

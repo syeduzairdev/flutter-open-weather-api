@@ -10,7 +10,7 @@ class WeatherService {
     var userHeader = {"Accept": "application/json"};
     final response = await http.get(
       Uri.parse(
-          "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=YOUR_API_KEY"),
+          "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=App_Key&units=metric"),
       headers: userHeader,
     );
     if (kDebugMode) {
